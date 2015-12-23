@@ -12,7 +12,7 @@ import dagger.Component;
  * @author jonatan.salas
  */
 @Singleton
-@Component(modules = { ControllerModule.class })
+@Component(modules = { ControllerModule.class } )
 public interface ControllerComponent {
 
     Controller<Person> providePersonController();
