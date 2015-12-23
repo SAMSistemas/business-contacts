@@ -73,9 +73,13 @@ public class MainActivity extends BaseAppCompatActivity {
 
             @Override
             public void onLoadFinished(Loader<List<Person>> loader, List<Person> data) {
-                mPersonAdapter = new PersonAdapter(getApplicationContext(), data);
-                mListView.setAdapter(mPersonAdapter);
-                mPersonAdapter.notifyDataSetChanged();
+                if (null == data || data.isEmpty()) {
+                    loader.reset();
+                } else {
+                    mPersonAdapter = new PersonAdapter(getApplicationContext(), data);
+                    mListView.setAdapter(mPersonAdapter);
+                    mPersonAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
