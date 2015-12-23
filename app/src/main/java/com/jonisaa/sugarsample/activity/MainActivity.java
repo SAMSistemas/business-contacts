@@ -1,9 +1,14 @@
 package com.jonisaa.sugarsample.activity;
 
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jonisaa.sugarsample.adapter.PersonAdapter;
 import com.jonisaa.sugarsample.R;
@@ -11,6 +16,7 @@ import com.jonisaa.sugarsample.activity.base.BaseAppCompatActivity;
 import com.jonisaa.sugarsample.component.ControllerComponent;
 import com.jonisaa.sugarsample.component.DaggerControllerComponent;
 import com.jonisaa.sugarsample.controller.base.Controller;
+import com.jonisaa.sugarsample.loader.PersonsLoader;
 import com.jonisaa.sugarsample.model.Person;
 
 import java.util.List;
@@ -21,12 +27,12 @@ import butterknife.Bind;
  * @author jonatan.salas
  */
 public class MainActivity extends BaseAppCompatActivity {
+    private static final int PERSONS_LOADER_ID = 0;
 
     @Bind(R.id.listView)
     ListView mListView;
 
     private PersonAdapter mPersonAdapter;
-    private Controller<Person> mPersonController;
 
     @Override
     public int getLayoutResource() {
@@ -53,51 +59,70 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void initialize() {
-        final ControllerComponent component = DaggerControllerComponent.builder().build();
-        mPersonController = component.providePersonController();
-
-        insertInBackground();
-        final List<Person> persons = mPersonController.listAll();
-        mPersonAdapter = new PersonAdapter(getApplicationContext(), persons);
+        new LoadPersonsInBackground().execute();
     }
 
     @Override
     public void populateViews() {
-        mListView.setAdapter(mPersonAdapter);
-        mPersonAdapter.notifyDataSetChanged();
+        getSupportLoaderManager().initLoader(PERSONS_LOADER_ID, null, new LoaderManager.LoaderCallbacks<List<Person>>() {
+
+            @Override
+            public Loader<List<Person>> onCreateLoader(int id, Bundle args) {
+                return new PersonsLoader(getApplicationContext());
+            }
+
+            @Override
+            public void onLoadFinished(Loader<List<Person>> loader, List<Person> data) {
+                mPersonAdapter = new PersonAdapter(getApplicationContext(), data);
+                mListView.setAdapter(mPersonAdapter);
+                mPersonAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoaderReset(Loader<List<Person>> loader) {
+                if (!loader.isReset()) {
+                    loader.reset();
+                }
+            }
+        }).forceLoad();
     }
 
     @Override
-    public void deleteListeners() {
-        mPersonController.deleteAll();
-    }
+    public void deleteListeners() { }
 
-    private void insertInBackground(){
-        final Thread personThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-                mPersonController.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            }
-        });
+    public class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
 
-        personThread.start();
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            final ControllerComponent component = DaggerControllerComponent.builder().build();
+            final Controller<Person> controller = component.providePersonController();
+
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            Toast.makeText(getApplicationContext(), "Insertados exitosamente!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

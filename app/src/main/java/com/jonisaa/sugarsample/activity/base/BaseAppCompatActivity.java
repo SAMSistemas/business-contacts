@@ -18,16 +18,16 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
-        setupUserInterface();
-        setListeners();
         initialize();
+        setupUserInterface();
         populateViews();
+        setListeners();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initialize();
+        setupUserInterface();
         populateViews();
     }
 
@@ -40,7 +40,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        initialize();
+        setupUserInterface();
         populateViews();
     }
 
