@@ -35,4 +35,9 @@ public class Person extends SugarRecord {
     public String getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return "Mi nombre es " + getName() + ", me apellido " + getLastName() + ", tengo " + getAge() + " años y vivo en " + getLocation() + ".";
+    }
 }

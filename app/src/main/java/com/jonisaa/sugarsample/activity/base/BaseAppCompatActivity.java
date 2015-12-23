@@ -1,5 +1,6 @@
 package com.jonisaa.sugarsample.activity.base;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setupUserInterface();
         setListeners();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         initialize();
         populateViews();
     }
@@ -39,6 +35,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         deleteListeners();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        initialize();
+        populateViews();
     }
 
     @LayoutRes

@@ -9,7 +9,7 @@ public interface Controller<T> {
 
     Long insert(T object);
 
-    T get(Long id);
+    T findById(Long id);
 
     List<T> listAll();
 

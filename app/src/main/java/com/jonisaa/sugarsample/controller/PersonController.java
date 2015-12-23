@@ -5,9 +5,12 @@ import com.jonisaa.sugarsample.model.Person;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 /**
  * @author jonatan.salas
  */
+@Singleton
 public class PersonController implements Controller<Person> {
     private static final Class<Person> clazz = Person.class;
 
@@ -17,7 +20,7 @@ public class PersonController implements Controller<Person> {
     }
 
     @Override
-    public Person get(Long id) {
+    public Person findById(Long id) {
         return Person.findById(clazz, id);
     }
 
