@@ -17,11 +17,12 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
 
     public PersonsLoader(Context context) {
         super(context);
-        this.mPersonController = DaggerControllerComponent.builder().build().providePersonController();
+        this.mPersonController = DaggerControllerComponent.create().providePersonController();
     }
 
     @Override
     public List<Person> loadInBackground() {
-        return mPersonController.listAll();
+        List<Person> persons = mPersonController.listAll();
+        return (null != persons) ? persons : loadInBackground();
     }
 }

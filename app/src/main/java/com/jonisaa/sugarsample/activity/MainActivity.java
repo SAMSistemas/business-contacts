@@ -98,7 +98,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            final ControllerComponent component = DaggerControllerComponent.builder().build();
+            final ControllerComponent component = DaggerControllerComponent.create();
             final Controller<Person> controller = component.providePersonController();
 
             controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
@@ -126,7 +126,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Toast.makeText(getApplicationContext(), "Insertados exitosamente!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mListView, "Insertados exitosamente!", Toast.LENGTH_SHORT).show();
         }
     }
 }
