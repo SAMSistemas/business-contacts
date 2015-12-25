@@ -8,7 +8,6 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jonisaa.sugarsample.adapter.PersonAdapter;
 import com.jonisaa.sugarsample.R;
@@ -92,7 +91,9 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    public void deleteListeners() { }
+    public void deleteListeners() {
+        mListView.setOnItemClickListener(null);
+    }
 
     public class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
 
@@ -101,32 +102,37 @@ public class MainActivity extends BaseAppCompatActivity {
             final ControllerComponent component = DaggerControllerComponent.create();
             final Controller<Person> controller = component.providePersonController();
 
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person("Mariano", "Loisotto", "23", "Florencio Varela"));
+            if (controller.getCount() > 0) {
+                controller.deleteAll();
+            }
+
+            controller.insert(new Person(1L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(2L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(3L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(4L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(5L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(6L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(7L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(8L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(9L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(10L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(11L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(12L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(13L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(14L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(15L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(16L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(17L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(18L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(19L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            controller.insert(new Person(20L, "Mariano", "Loisotto", "23", "Florencio Varela"));
 
             return true;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Snackbar.make(mListView, "Insertados exitosamente!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mListView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
         }
     }
 }

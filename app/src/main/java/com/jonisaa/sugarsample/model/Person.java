@@ -13,7 +13,8 @@ public class Person extends SugarRecord {
 
     public Person() { }
 
-    public Person(String name, String lastName, String age, String location) {
+    public Person(Long id, String name, String lastName, String age, String location) {
+        this.setId(id);
         this.name = name;
         this.lastName = lastName;
         this.age = age;
