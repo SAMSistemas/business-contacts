@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
  * @author jonatan.salas
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
-    protected static final String LOG_TAG = BaseAppCompatActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +19,18 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initialize();
         setupUserInterface();
-        populateViews();
         setListeners();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        populateViews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setupUserInterface();
         populateViews();
     }
 
@@ -35,6 +38,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         deleteListeners();
+        delete();
     }
 
     @Override
@@ -56,4 +60,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public abstract void populateViews();
 
     public abstract void deleteListeners();
+
+    public abstract void delete();
 }

@@ -8,6 +8,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.jonisaa.sugarsample.adapter.PersonAdapter;
 import com.jonisaa.sugarsample.R;
@@ -31,6 +32,9 @@ public class MainActivity extends BaseAppCompatActivity {
     @Bind(R.id.listView)
     ListView mListView;
 
+    @Bind(R.id.progressBar)
+    ProgressBar mProgressBar;
+
     private PersonAdapter mPersonAdapter;
 
     @Override
@@ -41,8 +45,9 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     public void setupUserInterface() {
         mListView.setDividerHeight(1);
-        mListView.setEnabled(true);
-        mListView.setClickable(true);
+        mListView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setIndeterminate(true);
     }
 
     @Override
@@ -63,6 +68,23 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void populateViews() {
+        initPersonsLoader();
+    }
+
+    @Override
+    public void deleteListeners() {
+        mListView.setOnItemClickListener(null);
+    }
+
+    @Override
+    public void delete() {
+        mListView.setAdapter(null);
+        mPersonAdapter = null;
+        mProgressBar = null;
+        mListView = null;
+    }
+
+    private void initPersonsLoader() {
         getSupportLoaderManager().initLoader(PERSONS_LOADER_ID, null, new LoaderManager.LoaderCallbacks<List<Person>>() {
 
             @Override
@@ -76,6 +98,8 @@ public class MainActivity extends BaseAppCompatActivity {
                     loader.reset();
                 } else {
                     mPersonAdapter = new PersonAdapter(getApplicationContext(), data);
+                    mProgressBar.setVisibility(View.GONE);
+                    mListView.setVisibility(View.VISIBLE);
                     mListView.setAdapter(mPersonAdapter);
                     mPersonAdapter.notifyDataSetChanged();
                 }
@@ -88,11 +112,6 @@ public class MainActivity extends BaseAppCompatActivity {
                 }
             }
         }).forceLoad();
-    }
-
-    @Override
-    public void deleteListeners() {
-        mListView.setOnItemClickListener(null);
     }
 
     public class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
