@@ -2,6 +2,7 @@ package com.jonisaa.sugarsample.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -18,6 +19,7 @@ import com.jonisaa.sugarsample.component.DaggerControllerComponent;
 import com.jonisaa.sugarsample.controller.base.Controller;
 import com.jonisaa.sugarsample.loader.PersonsLoader;
 import com.jonisaa.sugarsample.model.Person;
+import com.jonisaa.sugarsample.utility.DeveloperUtility;
 
 import java.util.List;
 
@@ -63,7 +65,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void initialize() {
-        new LoadPersonsInBackground().execute();
+        new LoadPersonsInBackground(mListView).execute();
+        DeveloperUtility.enableDeveloperStrictMode(true);
     }
 
     @Override
@@ -114,44 +117,52 @@ public class MainActivity extends BaseAppCompatActivity {
         }).forceLoad();
     }
 
-    public class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
+    public static  class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
+        @Nullable
+        private View mAttachedView;
+
+        public LoadPersonsInBackground(@Nullable View v) {
+            this.mAttachedView = v;
+        }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             final ControllerComponent component = DaggerControllerComponent.create();
             final Controller<Person> controller = component.providePersonController();
 
-            if (controller.getCount() > 0) {
-                controller.deleteAll();
+            if (controller.getCount() == 0) {
+                controller.insert(new Person(1L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(2L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(3L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(4L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(5L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(6L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(7L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(8L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(9L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(10L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(11L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(12L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(13L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(14L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(15L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(16L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(17L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(18L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(19L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+                controller.insert(new Person(20L, "Mariano", "Loisotto", "23", "Florencio Varela"));
+            } else {
+                cancel(true);
             }
-
-            controller.insert(new Person(1L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(2L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(3L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(4L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(5L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(6L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(7L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(8L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(9L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(10L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(11L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(12L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(13L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(14L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(15L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(16L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(17L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(18L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(19L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            controller.insert(new Person(20L, "Mariano", "Loisotto", "23", "Florencio Varela"));
 
             return true;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Snackbar.make(mListView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
+            if (null != mAttachedView) {
+                Snackbar.make(mAttachedView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 }

@@ -35,6 +35,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        populateViews();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         deleteListeners();
@@ -44,8 +50,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setupUserInterface();
-        populateViews();
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            populateViews();
+        }
     }
 
     @LayoutRes
