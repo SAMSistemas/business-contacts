@@ -4,47 +4,48 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.jonisaa.sugarsample.controller.base.Controller;
-import com.jonisaa.sugarsample.model.Person;
 import com.orm.SugarRecord;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
-
-import javax.inject.Singleton;
 
 /**
  * @author jonatan.salas
  */
-@Singleton
-public class PersonController implements Controller<Person> {
-    private static final Class<Person> clazz = Person.class;
+public class BaseController<T> implements Controller<T> {
+    private Class<T> clazz;
+
+    public BaseController() {
+    }
 
     @NonNull
     @Override
-    public Long insert(@NonNull Person object) {
+    public Long insert(@NonNull T object) {
         return SugarRecord.save(object);
     }
 
     @Nullable
     @Override
-    public Person findById(@NonNull Long id) {
+    public T findById(@NonNull Long id) {
         return SugarRecord.findById(clazz, id);
     }
 
     @Nullable
     @Override
-    public List<Person> listAll() {
+    public List<T> listAll() {
         return SugarRecord.listAll(clazz);
     }
 
     @NonNull
     @Override
-    public Long update(@NonNull Person object) {
+    public Long update(@NonNull T object) {
         return SugarRecord.save(object);
     }
 
     @NonNull
     @Override
-    public Boolean delete(@NonNull Person object) {
+    public Boolean delete(@NonNull T object) {
         return SugarRecord.delete(object);
     }
 

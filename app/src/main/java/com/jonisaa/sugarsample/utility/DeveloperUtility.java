@@ -9,7 +9,7 @@ public final class DeveloperUtility {
 
     private DeveloperUtility() { }
 
-    public static void enableDeveloperStrictMode(boolean enabled) {
+    public static void enableStrictModeApi(boolean enabled) {
         if (enabled) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()

@@ -1,11 +1,16 @@
 package com.jonisaa.sugarsample.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 /**
  * @author jonatan.salas
  */
-public class Person extends SugarRecord {
+@Table
+public class Person {
+    @Unique
+    private Long id;
     private String name;
     private String lastName;
     private String age;
@@ -14,7 +19,7 @@ public class Person extends SugarRecord {
     public Person() { }
 
     public Person(Long id, String name, String lastName, String age, String location) {
-        this.setId(id);
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.age = age;

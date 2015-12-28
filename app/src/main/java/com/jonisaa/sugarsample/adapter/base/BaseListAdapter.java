@@ -47,6 +47,10 @@ public class BaseListAdapter extends BaseAdapter {
 
     public static abstract class ViewHolder<T> {
 
+        /**
+         *
+         * @param object
+         */
         public abstract void bindViews(T object);
     }
 }

@@ -1,21 +1,29 @@
 package com.jonisaa.sugarsample.controller.base;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 /**
- *
+ * @author jonatan.salas
  */
 public interface Controller<T> {
 
-    Long insert(T object);
+    @NonNull
+    Long insert(@NonNull T object);
 
-    T findById(Long id);
+    @Nullable
+    T findById(@NonNull Long id);
 
+    @Nullable
     List<T> listAll();
 
-    Long update(T object);
+    @NonNull
+    Long update(@NonNull T object);
 
-    Boolean delete(T object);
+    @NonNull
+    Boolean delete(@NonNull T object);
 
     int deleteAll();
 

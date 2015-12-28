@@ -14,16 +14,22 @@ import android.widget.ProgressBar;
 import com.jonisaa.sugarsample.adapter.PersonAdapter;
 import com.jonisaa.sugarsample.R;
 import com.jonisaa.sugarsample.activity.base.BaseAppCompatActivity;
-import com.jonisaa.sugarsample.component.ControllerComponent;
 import com.jonisaa.sugarsample.component.DaggerControllerComponent;
 import com.jonisaa.sugarsample.controller.base.Controller;
 import com.jonisaa.sugarsample.loader.PersonsLoader;
 import com.jonisaa.sugarsample.model.Person;
+import com.jonisaa.sugarsample.service.PersonService;
 import com.jonisaa.sugarsample.utility.DeveloperUtility;
 
 import java.util.List;
 
 import butterknife.Bind;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * @author jonatan.salas
@@ -66,7 +72,7 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     public void initialize() {
         new LoadPersonsInBackground(mListView).execute();
-        DeveloperUtility.enableDeveloperStrictMode(true);
+        DeveloperUtility.enableStrictModeApi(true);
     }
 
     @Override
@@ -92,7 +98,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
             @Override
             public Loader<List<Person>> onCreateLoader(int id, Bundle args) {
-                return new PersonsLoader(getApplicationContext());
+                return (id == PERSONS_LOADER_ID) ? new PersonsLoader(getApplicationContext()) : null;
             }
 
             @Override
@@ -117,7 +123,9 @@ public class MainActivity extends BaseAppCompatActivity {
         }).forceLoad();
     }
 
-    public static  class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> {
+    public static  class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> implements Callback<List<Person>> {
+        private static final String BASE_URL = "http://10.0.0.128:8080";
+
         @Nullable
         private View mAttachedView;
 
@@ -127,33 +135,14 @@ public class MainActivity extends BaseAppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            final ControllerComponent component = DaggerControllerComponent.create();
-            final Controller<Person> controller = component.providePersonController();
+            final Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-            if (controller.getCount() == 0) {
-                controller.insert(new Person(1L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(2L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(3L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(4L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(5L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(6L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(7L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(8L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(9L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(10L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(11L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(12L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(13L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(14L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(15L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(16L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(17L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(18L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(19L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-                controller.insert(new Person(20L, "Mariano", "Loisotto", "23", "Florencio Varela"));
-            } else {
-                cancel(true);
-            }
+            final PersonService personService = retrofit.create(PersonService.class);
+            final Call<List<Person>> queue = personService.listPersons();
+            queue.enqueue(this);
 
             return true;
         }
@@ -163,6 +152,24 @@ public class MainActivity extends BaseAppCompatActivity {
             if (null != mAttachedView) {
                 Snackbar.make(mAttachedView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
             }
+        }
+
+        @Override
+        public void onResponse(Response<List<Person>> response, Retrofit retrofit) {
+            final Controller<Person> personController = DaggerControllerComponent.create()
+                    .providePersonController();
+            final List<Person> personList = response.body();
+
+            if (null != personList) {
+                for (int i = 0; i < personList.size(); i++) {
+                    personController.insert(personList.get(i));
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            cancel(true);
         }
     }
 }
