@@ -1,6 +1,6 @@
 package com.jonisaa.sugarsample.module;
 
-import com.jonisaa.sugarsample.controller.PersonController;
+import com.jonisaa.sugarsample.controller.ControllerImpl;
 import com.jonisaa.sugarsample.controller.base.Controller;
 import com.jonisaa.sugarsample.model.Person;
 
@@ -17,6 +17,6 @@ public class ControllerModule {
 
     @Provides @Singleton
     Controller<Person> providePersonController() {
-        return new PersonController();
+        return new ControllerImpl<>();
     }
 }

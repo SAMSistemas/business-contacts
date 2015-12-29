@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
     private static final String LOG_TAG = PersonsLoader.class.getSimpleName();
-    private final Object mLock = new Object();
     private Controller<Person> mPersonController;
+    private final Object mLock = new Object();
 
     public PersonsLoader(Context context) {
         super(context);
@@ -27,7 +27,7 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
     public List<Person> loadInBackground() {
         List<Person> personList = null;
 
-        if (mPersonController.getCount() == 0) {
+        if (mPersonController.getCount(Person.class) == 0) {
             try {
                 synchronized (mLock) {
                     mLock.wait(3000);
@@ -37,7 +37,7 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
             }
         } else {
             synchronized (mLock) {
-                personList = mPersonController.listAll();
+                personList = mPersonController.listAll(Person.class);
                 mLock.notify();
             }
         }
