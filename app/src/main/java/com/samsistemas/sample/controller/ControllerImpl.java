@@ -11,7 +11,10 @@ import java.util.List;
 import javax.inject.Singleton;
 
 /**
+ * Controller interface implementation
+ *
  * @author jonatan.salas
+ * @param <T> any model class to persist with SugarORM
  */
 @Singleton
 public class ControllerImpl<T> implements Controller<T> {

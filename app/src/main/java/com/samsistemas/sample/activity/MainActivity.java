@@ -62,7 +62,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void initialize() {
-        new FetchPersonsTask(mListView).execute();
+        new FetchPersonsTask().execute();
         DeveloperUtility.enableStrictModeApi(true);
     }
 

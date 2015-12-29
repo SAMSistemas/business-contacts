@@ -11,6 +11,8 @@ import com.samsistemas.sample.model.Person;
 import java.util.List;
 
 /**
+ * Loader of Persons data
+ *
  * @author jonatan.salas
  */
 public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
@@ -18,6 +20,11 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
     private Controller<Person> mPersonController;
     private final Object mLock = new Object();
 
+    /**
+     * Constructor with params
+     *
+     * @param context the application context used to call the super constructor
+     */
     public PersonsLoader(Context context) {
         super(context);
         this.mPersonController = DaggerControllerComponent.create().providePersonController();

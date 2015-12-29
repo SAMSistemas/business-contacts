@@ -18,10 +18,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * Adapter class that presents a Person object data
+ *
  * @author jonatan.salas
  */
 public class PersonAdapter extends BaseListAdapter {
 
+    /**
+     * Default constructor with params.
+     *
+     * @param context the context used to inflate the item layout resource
+     * @param items the list of items to populate by this adapter
+     */
     public PersonAdapter(@NonNull Context context, @Nullable  List<Person> items) {
         super(context, items);
     }
@@ -44,6 +52,10 @@ public class PersonAdapter extends BaseListAdapter {
         return convertView;
     }
 
+    /**
+     *
+     * @author jonatan.salas
+     */
     static class PersonViewHolder extends BaseListAdapter.ViewHolder<Person> {
         @Bind(R.id.list_item)
         TextView mListItem;

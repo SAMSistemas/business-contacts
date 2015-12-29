@@ -4,13 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-        android:allowBackup="true"
+    <application android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="com.orm.SugarApp">
+
         <activity android:name="com.samsistemas.sample.activity.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation">
             <intent-filter>
@@ -20,12 +20,10 @@
             </intent-filter>
         </activity>
 
-
-        <meta-data android:name="DATABASE" android:value="sugar_example.db" />
+        <meta-data android:name="DATABASE" android:value="sam_example.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.jonisaa.sugarsample.model" />
-
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.samsistemas.sample.model" />
     </application>
 
 </manifest>

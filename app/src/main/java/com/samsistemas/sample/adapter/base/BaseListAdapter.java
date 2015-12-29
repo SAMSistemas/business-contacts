@@ -20,6 +20,12 @@ public class BaseListAdapter extends BaseAdapter {
     @Nullable
     protected List mItems;
 
+    /**
+     * BaseListAdapter constructor with params
+     *
+     * @param context the context used to inflate the view that represent an Item in the ListView
+     * @param items the list of items to populate
+     */
     public BaseListAdapter(@NonNull Context context, @Nullable List items) {
         this.mContext = context;
         this.mItems = items;
@@ -45,8 +51,19 @@ public class BaseListAdapter extends BaseAdapter {
         return null;
     }
 
-    public static abstract class ViewHolder<T> {
+    /**
+     * ViewHolder abstract class
+     *
+     * @author jonatan.salas
+     * @param <T> the object to bind with the view
+     */
+    public abstract static class ViewHolder<T> {
 
+        /**
+         * Abstract method whose purpose is to bind the view with the model
+         *
+         * @param object the object containing the data to be presented in a ListView item
+         */
         public abstract void bindViews(T object);
     }
 }

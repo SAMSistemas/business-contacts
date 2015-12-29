@@ -2,9 +2,6 @@ package com.samsistemas.sample.service;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import com.samsistemas.sample.component.DaggerControllerComponent;
 import com.samsistemas.sample.controller.base.Controller;
@@ -21,23 +18,24 @@ import retrofit.Retrofit;
 import static com.samsistemas.sample.constant.ApplicationConstant.BASE_URL;
 
 /**
+ * AsyncTask that performs the insert of Persons using SugarORM
+ *
  * @author jonatan.salas
  */
-public class FetchPersonsTask extends AsyncTask<Void, Void, Boolean> implements Callback<List<Person>> {
-
-    @Nullable
-    private View mAttachedView;
+public class FetchPersonsTask extends AsyncTask<Void, Void, Void> implements Callback<List<Person>> {
 
     @NonNull
     private Controller<Person> mPersonController;
 
-    public FetchPersonsTask(@Nullable View view) {
-        this.mAttachedView = view;
+    /**
+     * Default Constructor
+     */
+    public FetchPersonsTask() {
         this.mPersonController = DaggerControllerComponent.create().providePersonController();
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,14 +45,7 @@ public class FetchPersonsTask extends AsyncTask<Void, Void, Boolean> implements 
         final Call<List<Person>> queue = personService.listPersons();
         queue.enqueue(this);
 
-        return true;
-    }
-
-    @Override
-    protected void onPostExecute(Boolean aBoolean) {
-        if (null != mAttachedView) {
-            Snackbar.make(mAttachedView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
-        }
+        return null;
     }
 
     @Override
