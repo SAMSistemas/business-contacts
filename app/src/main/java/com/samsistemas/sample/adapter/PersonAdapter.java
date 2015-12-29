@@ -53,6 +53,7 @@ public class PersonAdapter extends BaseListAdapter {
     }
 
     /**
+     * Person ViewHolder class
      *
      * @author jonatan.salas
      */
@@ -60,6 +61,11 @@ public class PersonAdapter extends BaseListAdapter {
         @Bind(R.id.list_item)
         TextView mListItem;
 
+        /**
+         * ViewHolder constructor with params
+         *
+         * @param view the view to bind
+         */
         public PersonViewHolder(@NonNull View view) {
             ButterKnife.bind(this, view);
         }

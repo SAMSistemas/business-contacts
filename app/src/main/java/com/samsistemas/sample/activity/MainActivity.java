@@ -24,6 +24,8 @@ import butterknife.Bind;
 import static com.samsistemas.sample.constant.ApplicationConstant.PERSONS_LOADER_ID;
 
 /**
+ * Main activity controller
+ *
  * @author jonatan.salas
  */
 public class MainActivity extends BaseAppCompatActivity {
@@ -85,7 +87,8 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void initPersonsLoader() {
-        getSupportLoaderManager().initLoader(PERSONS_LOADER_ID, null, new LoaderManager.LoaderCallbacks<List<Person>>() {
+        getSupportLoaderManager().initLoader(PERSONS_LOADER_ID, null,
+                new LoaderManager.LoaderCallbacks<List<Person>>() {
 
             @Override
             public Loader<List<Person>> onCreateLoader(int id, Bundle args) {

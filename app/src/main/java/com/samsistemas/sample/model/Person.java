@@ -4,6 +4,8 @@ import com.orm.dsl.Table;
 import com.orm.dsl.Unique;
 
 /**
+ * Class that represents the Person table
+ *
  * @author jonatan.salas
  */
 @Table
@@ -15,8 +17,20 @@ public class Person {
     private String age;
     private String location;
 
+    /**
+     * Public constructor
+     */
     public Person() { }
 
+    /**
+     * Public constructor with params
+     *
+     * @param id the id of the person to save
+     * @param name the name of the person to save
+     * @param lastName the lastName of the person to save
+     * @param age the age of the person to save
+     * @param location the location of the person to save
+     */
     public Person(Long id, String name, String lastName, String age, String location) {
         this.id = id;
         this.name = name;
@@ -47,6 +61,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Mi nombre es " + getName() + ", me apellido " + getLastName() + ", tengo " + getAge() + " años y vivo en " + getLocation() + ".";
+        return  "Mi nombre es "
+                + getName() + ", me apellido "
+                + getLastName() + ", tengo "
+                + getAge() + " años y vivo en "
+                + getLocation() + ".";
     }
 }
