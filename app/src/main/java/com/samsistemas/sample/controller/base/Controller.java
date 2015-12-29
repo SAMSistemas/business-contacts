@@ -8,24 +8,24 @@ import java.util.List;
 /**
  * @author jonatan.salas
  */
-public abstract class Controller<T> {
+public interface Controller<T> {
 
     @NonNull
-    public abstract Long insert(@NonNull T object);
+    Long insert(@NonNull T object);
 
     @Nullable
-    public abstract T findById(Class<T> clazz, @NonNull Long id);
+    T findById(Class<T> clazz, @NonNull Long id);
 
     @Nullable
-    public abstract List<T> listAll(Class<T> clazz);
+    List<T> listAll(Class<T> clazz);
 
     @NonNull
-    public abstract Long update(@NonNull T object);
+    Long update(@NonNull T object);
 
     @NonNull
-    public abstract Boolean delete(@NonNull T object);
+    Boolean delete(@NonNull T object);
 
-    public abstract int deleteAll(Class<T> clazz);
+    int deleteAll(Class<T> clazz);
 
-    public abstract long getCount(Class<T> clazz);
+    long getCount(Class<T> clazz);
 }

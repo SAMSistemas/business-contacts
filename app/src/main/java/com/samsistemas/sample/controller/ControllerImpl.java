@@ -8,14 +8,13 @@ import com.orm.SugarRecord;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 /**
  * @author jonatan.salas
  */
-public class ControllerImpl<T> extends Controller<T> {
-
-    public ControllerImpl() {
-        super();
-    }
+@Singleton
+public class ControllerImpl<T> implements Controller<T> {
 
     @NonNull
     @Override
