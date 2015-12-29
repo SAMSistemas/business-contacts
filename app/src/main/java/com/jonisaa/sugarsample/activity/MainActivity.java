@@ -1,8 +1,6 @@
 package com.jonisaa.sugarsample.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -14,28 +12,21 @@ import android.widget.ProgressBar;
 import com.jonisaa.sugarsample.adapter.PersonAdapter;
 import com.jonisaa.sugarsample.R;
 import com.jonisaa.sugarsample.activity.base.BaseAppCompatActivity;
-import com.jonisaa.sugarsample.component.DaggerControllerComponent;
-import com.jonisaa.sugarsample.controller.base.Controller;
 import com.jonisaa.sugarsample.loader.PersonsLoader;
 import com.jonisaa.sugarsample.model.Person;
-import com.jonisaa.sugarsample.service.PersonService;
+import com.jonisaa.sugarsample.service.FetchPersonsTask;
 import com.jonisaa.sugarsample.utility.DeveloperUtility;
 
 import java.util.List;
 
 import butterknife.Bind;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import static com.jonisaa.sugarsample.constant.ApplicationConstant.PERSONS_LOADER_ID;
 
 /**
  * @author jonatan.salas
  */
 public class MainActivity extends BaseAppCompatActivity {
-    private static final int PERSONS_LOADER_ID = 0;
 
     @Bind(R.id.listView)
     ListView mListView;
@@ -71,7 +62,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public void initialize() {
-        new LoadPersonsInBackground(mListView).execute();
+        new FetchPersonsTask(mListView).execute();
         DeveloperUtility.enableStrictModeApi(true);
     }
 
@@ -121,55 +112,5 @@ public class MainActivity extends BaseAppCompatActivity {
                 }
             }
         }).forceLoad();
-    }
-
-    public static  class LoadPersonsInBackground extends AsyncTask<Void, Void, Boolean> implements Callback<List<Person>> {
-        private static final String BASE_URL = "http://10.0.0.128:8080";
-
-        @Nullable
-        private View mAttachedView;
-
-        public LoadPersonsInBackground(@Nullable View v) {
-            this.mAttachedView = v;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            final Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            final PersonService personService = retrofit.create(PersonService.class);
-            final Call<List<Person>> queue = personService.listPersons();
-            queue.enqueue(this);
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (null != mAttachedView) {
-                Snackbar.make(mAttachedView, "Insertados exitosamente!", Snackbar.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        public void onResponse(Response<List<Person>> response, Retrofit retrofit) {
-            final Controller<Person> personController = DaggerControllerComponent.create()
-                    .providePersonController();
-            final List<Person> personList = response.body();
-
-            if (null != personList) {
-                for (int i = 0; i < personList.size(); i++) {
-                    personController.insert(personList.get(i));
-                }
-            }
-        }
-
-        @Override
-        public void onFailure(Throwable t) {
-            cancel(true);
-        }
     }
 }
