@@ -4,23 +4,28 @@ import com.orm.dsl.Table;
 import com.orm.dsl.Unique;
 
 /**
- * Class that represents the Person table
+ * Class that represents the Contact table
  *
  * @author jonatan.salas
  */
 @Table
-public class Person {
+public class Contact {
+
     @Unique
     private Long id;
+
     private String name;
+
     private String lastName;
+
     private String age;
+
     private String location;
 
     /**
      * Public constructor
      */
-    public Person() { }
+    public Contact() { }
 
     /**
      * Public constructor with params
@@ -31,7 +36,7 @@ public class Person {
      * @param age the age of the person to save
      * @param location the location of the person to save
      */
-    public Person(Long id, String name, String lastName, String age, String location) {
+    public Contact(Long id, String name, String lastName, String age, String location) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

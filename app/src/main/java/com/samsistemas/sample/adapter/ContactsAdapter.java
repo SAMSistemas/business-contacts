@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.samsistemas.sample.R;
 import com.samsistemas.sample.adapter.base.BaseListAdapter;
-import com.samsistemas.sample.model.Person;
+import com.samsistemas.sample.model.Contact;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Adapter class that presents a Person object data
+ * Adapter class that presents a Contact object data
  *
  * @author jonatan.salas
  */
-public class PersonAdapter extends BaseListAdapter {
+public class ContactsAdapter extends BaseListAdapter {
 
     /**
      * Default constructor with params.
@@ -30,13 +30,13 @@ public class PersonAdapter extends BaseListAdapter {
      * @param context the context used to inflate the item layout resource
      * @param items the list of items to populate by this adapter
      */
-    public PersonAdapter(@NonNull Context context, @Nullable  List<Person> items) {
+    public ContactsAdapter(@NonNull Context context, @Nullable  List<Contact> items) {
         super(context, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Person person = (Person) getItem(position);
+        final Contact contact = (Contact) getItem(position);
         PersonViewHolder viewHolder;
 
         if (null == convertView) {
@@ -47,17 +47,17 @@ public class PersonAdapter extends BaseListAdapter {
             viewHolder = (PersonViewHolder) convertView.getTag();
         }
 
-        viewHolder.bindViews(person);
+        viewHolder.bindViews(contact);
 
         return convertView;
     }
 
     /**
-     * Person ViewHolder class
+     * Contact ViewHolder class
      *
      * @author jonatan.salas
      */
-    static class PersonViewHolder extends BaseListAdapter.ViewHolder<Person> {
+    static class PersonViewHolder extends BaseListAdapter.ViewHolder<Contact> {
         @Bind(R.id.list_item)
         TextView mListItem;
 
@@ -71,7 +71,7 @@ public class PersonAdapter extends BaseListAdapter {
         }
 
         @Override
-        public void bindViews(Person object) {
+        public void bindViews(Contact object) {
             mListItem.setText(object.toString());
         }
     }

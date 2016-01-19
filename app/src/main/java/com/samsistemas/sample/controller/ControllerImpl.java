@@ -27,6 +27,12 @@ public class ControllerImpl<T> implements Controller<T> {
 
     @Nullable
     @Override
+    public List<T> search(Class<T> clazz, String query) {
+        return SugarRecord.find(clazz, "name LIKE " + "'" + query + "%'", null);
+    }
+
+    @Nullable
+    @Override
     public T findById(Class<T> clazz, @NonNull Long id) {
         return SugarRecord.findById(clazz, id);
     }

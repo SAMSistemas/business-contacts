@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.samsistemas.sample.component.DaggerControllerComponent;
 import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Person;
+import com.samsistemas.sample.model.Contact;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import java.util.List;
  *
  * @author jonatan.salas
  */
-public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
-    private static final String LOG_TAG = PersonsLoader.class.getSimpleName();
-    private Controller<Person> mPersonController;
+public class ContactsLoader extends AsyncTaskLoader<List<Contact>> {
+    private static final String LOG_TAG = ContactsLoader.class.getSimpleName();
+    private Controller<Contact> mPersonController;
     private final Object mLock = new Object();
 
     /**
@@ -25,16 +25,16 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
      *
      * @param context the application context used to call the super constructor
      */
-    public PersonsLoader(Context context) {
+    public ContactsLoader(Context context) {
         super(context);
-        this.mPersonController = DaggerControllerComponent.create().providePersonController();
+        this.mPersonController = DaggerControllerComponent.create().provideContactController();
     }
 
     @Override
-    public List<Person> loadInBackground() {
-        List<Person> personList = null;
+    public List<Contact> loadInBackground() {
+        List<Contact> contactList = null;
 
-        if (mPersonController.getCount(Person.class) == 0) {
+        if (mPersonController.getCount(Contact.class) == 0) {
             try {
                 synchronized (mLock) {
                     mLock.wait(3000);
@@ -44,11 +44,11 @@ public class PersonsLoader extends AsyncTaskLoader<List<Person>> {
             }
         } else {
             synchronized (mLock) {
-                personList = mPersonController.listAll(Person.class);
+                contactList = mPersonController.listAll(Contact.class);
                 mLock.notify();
             }
         }
 
-        return (null != personList) ? personList : loadInBackground();
+        return (null != contactList) ? contactList : null;
     }
 }

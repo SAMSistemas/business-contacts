@@ -2,10 +2,12 @@ package com.samsistemas.sample.service;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.samsistemas.sample.component.DaggerControllerComponent;
 import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Person;
+import com.samsistemas.sample.model.Contact;
 
 import java.util.List;
 
@@ -22,16 +24,20 @@ import static com.samsistemas.sample.constant.ApplicationConstant.BASE_URL;
  *
  * @author jonatan.salas
  */
-public class FetchPersonsTask extends AsyncTask<Void, Void, Void> implements Callback<List<Person>> {
+public class FetchPersonsTask extends AsyncTask<Void, Void, Void> implements Callback<List<Contact>> {
 
     @NonNull
-    private Controller<Person> mPersonController;
+    private View mView;
+
+    @NonNull
+    private Controller<Contact> mPersonController;
 
     /**
      * Default Constructor
      */
-    public FetchPersonsTask() {
-        this.mPersonController = DaggerControllerComponent.create().providePersonController();
+    public FetchPersonsTask(@NonNull View view) {
+        this.mView = view;
+        this.mPersonController = DaggerControllerComponent.create().provideContactController();
     }
 
     @Override
@@ -42,27 +48,26 @@ public class FetchPersonsTask extends AsyncTask<Void, Void, Void> implements Cal
                 .build();
 
         final PersonService personService = retrofit.create(PersonService.class);
-        final Call<List<Person>> queue = personService.listPersons();
+        final Call<List<Contact>> queue = personService.listPersons();
         queue.enqueue(this);
 
         return null;
     }
 
     @Override
-    public void onResponse(Response<List<Person>> response, Retrofit retrofit) {
-        final List<Person> personList = response.body();
+    public void onResponse(Response<List<Contact>> response, Retrofit retrofit) {
+        final List<Contact> contactList = response.body();
 
-        if (null != personList) {
-            for (int i = 0; i < personList.size(); i++) {
-                mPersonController.insert(personList.get(i));
+        if (null != contactList) {
+            for (int i = 0; i < contactList.size(); i++) {
+                mPersonController.insert(contactList.get(i));
             }
         }
     }
 
     @Override
     public void onFailure(Throwable t) {
-        if (null != t && !isCancelled()) {
-            cancel(true);
-        }
+        cancel(true);
+        Snackbar.make(mView, "There is a problem when retrieving the data", Snackbar.LENGTH_SHORT).show();
     }
 }

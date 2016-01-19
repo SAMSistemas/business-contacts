@@ -2,7 +2,7 @@ package com.samsistemas.sample.component;
 
 import com.samsistemas.sample.module.ControllerModule;
 import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Person;
+import com.samsistemas.sample.model.Contact;
 
 import javax.inject.Singleton;
 
@@ -16,9 +16,9 @@ import dagger.Component;
 public interface ControllerComponent {
 
     /**
-     * Method that provides a Person controller as singleton instance
+     * Method that provides a Contact controller as singleton instance
      *
      * @return a Singleton object
      */
-    Controller<Person> providePersonController();
+    Controller<Contact> provideContactController();
 }

@@ -23,6 +23,16 @@ public interface Controller<T> {
     Long insert(@NonNull T object);
 
     /**
+     *
+     * @param clazz
+     * @param query
+     *
+     * @return
+     */
+    @Nullable
+    List<T> search(Class<T> clazz, String query);
+
+    /**
      * Method used to find an object by its id
      *
      * @param clazz the Class of the object to return
