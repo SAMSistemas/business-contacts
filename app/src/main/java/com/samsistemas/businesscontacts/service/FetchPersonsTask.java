@@ -1,13 +1,13 @@
-package com.samsistemas.sample.service;
+package com.samsistemas.businesscontacts.service;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.samsistemas.sample.component.DaggerControllerComponent;
-import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Contact;
+import com.samsistemas.businesscontacts.component.DaggerControllerComponent;
+import com.samsistemas.businesscontacts.controller.base.Controller;
+import com.samsistemas.businesscontacts.model.Contact;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-import static com.samsistemas.sample.constant.ApplicationConstant.BASE_URL;
+import static com.samsistemas.businesscontacts.constant.ApplicationConstant.BASE_URL;
 
 /**
  * AsyncTask that performs the insert of Persons using SugarORM

@@ -1,4 +1,4 @@
-package com.samsistemas.sample.adapter;
+package com.samsistemas.businesscontacts.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.samsistemas.sample.R;
-import com.samsistemas.sample.adapter.base.BaseListAdapter;
-import com.samsistemas.sample.model.Contact;
+import com.samsistemas.businesscontacts.R;
+import com.samsistemas.businesscontacts.adapter.base.BaseListAdapter;
+import com.samsistemas.businesscontacts.model.Contact;
 
 import java.util.List;
 

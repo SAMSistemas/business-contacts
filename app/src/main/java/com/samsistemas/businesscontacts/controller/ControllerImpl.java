@@ -1,9 +1,9 @@
-package com.samsistemas.sample.controller;
+package com.samsistemas.businesscontacts.controller;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.samsistemas.sample.controller.base.Controller;
+import com.samsistemas.businesscontacts.controller.base.Controller;
 import com.orm.SugarRecord;
 
 import java.util.List;

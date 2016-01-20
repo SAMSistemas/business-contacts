@@ -1,4 +1,4 @@
-package com.samsistemas.sample.controller.base;
+package com.samsistemas.businesscontacts.controller.base;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

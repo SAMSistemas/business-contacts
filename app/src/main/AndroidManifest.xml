@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.samsistemas.sample">
+    package="com.samsistemas.businesscontacts">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.samsistemas.businesscontacts.activity.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTop">
             <meta-data

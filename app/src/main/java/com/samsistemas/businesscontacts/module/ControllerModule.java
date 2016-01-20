@@ -1,8 +1,8 @@
-package com.samsistemas.sample.module;
+package com.samsistemas.businesscontacts.module;
 
-import com.samsistemas.sample.controller.ControllerImpl;
-import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Contact;
+import com.samsistemas.businesscontacts.controller.ControllerImpl;
+import com.samsistemas.businesscontacts.controller.base.Controller;
+import com.samsistemas.businesscontacts.model.Contact;
 
 import javax.inject.Singleton;
 

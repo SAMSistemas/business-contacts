@@ -1,4 +1,4 @@
-package com.samsistemas.sample.adapter.base;
+package com.samsistemas.businesscontacts.adapter.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

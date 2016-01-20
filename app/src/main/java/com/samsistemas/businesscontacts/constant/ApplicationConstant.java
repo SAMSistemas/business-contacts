@@ -1,4 +1,4 @@
-package com.samsistemas.sample.constant;
+package com.samsistemas.businesscontacts.constant;
 
 /**
  * @author jonatan.salas

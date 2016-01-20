@@ -1,4 +1,4 @@
-package com.samsistemas.sample.model;
+package com.samsistemas.businesscontacts.model;
 
 import com.orm.dsl.Table;
 import com.orm.dsl.Unique;

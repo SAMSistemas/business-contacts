@@ -1,4 +1,4 @@
-package com.samsistemas.sample.utility;
+package com.samsistemas.businesscontacts.utility;
 
 import android.os.StrictMode;
 

@@ -1,4 +1,4 @@
-package com.samsistemas.sample.activity;
+package com.samsistemas.businesscontacts.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,24 +16,24 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.samsistemas.sample.adapter.ContactsAdapter;
-import com.samsistemas.sample.R;
-import com.samsistemas.sample.loader.ContactsLoader;
-import com.samsistemas.sample.loader.SearchContactsLoader;
-import com.samsistemas.sample.model.Contact;
-import com.samsistemas.sample.service.FetchPersonsTask;
-import com.samsistemas.sample.utility.DeveloperUtility;
+import com.samsistemas.businesscontacts.adapter.ContactsAdapter;
+import com.samsistemas.businesscontacts.R;
+import com.samsistemas.businesscontacts.loader.ContactsLoader;
+import com.samsistemas.businesscontacts.loader.SearchContactsLoader;
+import com.samsistemas.businesscontacts.model.Contact;
+import com.samsistemas.businesscontacts.service.FetchPersonsTask;
+import com.samsistemas.businesscontacts.utility.DeveloperUtility;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.samsistemas.sample.constant.ApplicationConstant.CONTACTS_LOADER_ID;
-import static com.samsistemas.sample.constant.ApplicationConstant.CONTACTS_QUERY_LOADER_ID;
+import static com.samsistemas.businesscontacts.constant.ApplicationConstant.CONTACTS_LOADER_ID;
+import static com.samsistemas.businesscontacts.constant.ApplicationConstant.CONTACTS_QUERY_LOADER_ID;
 
 /**
- * Main activity controller
+ * Activity that shows the list of business contacts
  *
  * @author jonatan.salas
  */
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -134,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
                 new LoaderManager.LoaderCallbacks<List<Contact>>() {
                     @Override
                     public Loader<List<Contact>> onCreateLoader(int id, Bundle args) {
-                        return (id == CONTACTS_LOADER_ID) ? new ContactsLoader(getApplicationContext()) : null;
+                        switch (id) {
+                            case CONTACTS_LOADER_ID:
+                                return new ContactsLoader(getApplicationContext());
+                            default:
+                                return null;
+                        }
                     }
 
                     @Override
@@ -164,7 +170,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public Loader<List<Contact>> onCreateLoader(int id, Bundle args) {
-                        return (id == CONTACTS_LOADER_ID) ? new ContactsLoader(getApplicationContext()) : null;
+                        switch (id) {
+                            case CONTACTS_LOADER_ID:
+                                return new ContactsLoader(getApplicationContext());
+                            default:
+                                return null;
+                        }
                     }
 
                     @Override
@@ -193,7 +204,12 @@ public class MainActivity extends AppCompatActivity {
                 new LoaderManager.LoaderCallbacks<List<Contact>>() {
                     @Override
                     public Loader<List<Contact>> onCreateLoader(int id, Bundle args) {
-                        return (id == CONTACTS_QUERY_LOADER_ID) ? new SearchContactsLoader(getApplicationContext(), query) : null;
+                        switch (id) {
+                            case CONTACTS_QUERY_LOADER_ID:
+                                return new SearchContactsLoader(getApplicationContext(), query);
+                            default:
+                                return null;
+                        }
                     }
 
                     @Override

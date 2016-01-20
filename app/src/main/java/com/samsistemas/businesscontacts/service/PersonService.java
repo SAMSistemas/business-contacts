@@ -1,6 +1,6 @@
-package com.samsistemas.sample.service;
+package com.samsistemas.businesscontacts.service;
 
-import com.samsistemas.sample.model.Contact;
+import com.samsistemas.businesscontacts.model.Contact;
 
 import java.util.List;
 

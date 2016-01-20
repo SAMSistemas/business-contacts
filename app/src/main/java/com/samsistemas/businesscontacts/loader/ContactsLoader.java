@@ -1,12 +1,12 @@
-package com.samsistemas.sample.loader;
+package com.samsistemas.businesscontacts.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.samsistemas.sample.component.DaggerControllerComponent;
-import com.samsistemas.sample.controller.base.Controller;
-import com.samsistemas.sample.model.Contact;
+import com.samsistemas.businesscontacts.component.DaggerControllerComponent;
+import com.samsistemas.businesscontacts.controller.base.Controller;
+import com.samsistemas.businesscontacts.model.Contact;
 
 import java.util.List;
 
